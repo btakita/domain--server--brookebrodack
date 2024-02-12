@@ -1,0 +1,53 @@
+{
+	"name": "@btakita/domain--server--brookebrodack",
+	"type": "module",
+	"version": "0.0.0",
+	"description": "domain library targeting the server for brookebrodack",
+	"keywords": [
+		"rappstack",
+		"reactive",
+		"full-stack",
+		"domain",
+		"server",
+		"blog"
+	],
+	"homepage": "https://github.com/btakita/domain--server--brookebrodack",
+	"bugs": {
+		"url": "https://github.com/btakita/domain--server--brookebrodack/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/btakita/domain--server--brookebrodack.git"
+	},
+	"license": "Apache-2.0",
+	"author": "Brian Takita",
+	"types": "index.ts",
+	"exports": {
+		".": "./index.ts",
+		"./schema": "./schema/index.ts",
+		"./youtube": "./youtube/index.ts",
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"*.d.ts",
+		"*.js",
+		"*.json",
+		"schema",
+		"youtube"
+	],
+	"dependencies": {
+		"@rappstack/domain--server": "workspace:*",
+		"@rappstack/domain--server--auth": "workspace:*",
+		"@rappstack/domain--server--youtube": "workspace:*",
+		"ctx-core": "^6.1.3",
+		"drizzle-kit": "^0.20.14",
+		"drizzle-orm": "^0.29.3",
+		"relysjs": "^1.11.6"
+	},
+	"devDependencies": {
+		"bun-types": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5.3.3"
+	}
+}
