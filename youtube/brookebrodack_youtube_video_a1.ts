@@ -34,6 +34,9 @@ export const [
 					brookebrodack_youtube_video_a1$._ = compact(
 						brookebrodack_youtube_video_a1) as typeof youtube_video.$inferSelect[]
 				})
+				.catch(err=>{
+					console.error(err)
+				})
 			return null
 		}
 		return (
