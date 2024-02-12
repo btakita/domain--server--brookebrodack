@@ -20,12 +20,13 @@ export const [
 	(ctx, brookebrodack_youtube_video_a1$)=>{
 		const brookebrodack_youtube_rss_text_cache_meta = brookebrodack_youtube_rss_text_cache_meta_(ctx)
 		const db = drizzle_db_(ctx)
-		const [up_to_date] =
-			db.select()
+		const up_to_date = !!(
+			brookebrodack_youtube_rss_text_cache_meta
+			&& db.select()
 				.from(youtube_video)
 				.where(eq(youtube_video.create_ms, brookebrodack_youtube_rss_text_cache_meta.create_ms))
 				.limit(1)
-				.all()
+				.all()[0])
 		if (!up_to_date) {
 			console.info('brookebrodack_youtube_video_a1|CACHE MISS')
 			upsert()
