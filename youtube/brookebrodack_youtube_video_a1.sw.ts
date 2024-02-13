@@ -125,9 +125,10 @@ export const [
 						.replaceAll('<yt:', '<')
 						.replaceAll('</yt:', '</')
 						.replaceAll('<media:', '<')
-						.replaceAll('</media:', '</')
-				))
-			await consume(response.body!)
+						.replaceAll('</media:', '</')))
+			const reader = response.body!.getReader()
+			while (!(await reader.read()).done) { /* NOOP */
+			}
 			return Promise.all(brookebrodack_youtube_video_promise_a1)
 			function text_ontext_(key:Exclude<keyof typeof _youtube_video, 'create_ms'|'published_ms'|'updated_ms'>) {
 				return {
@@ -148,8 +149,3 @@ export const [
 			}
 		}
 	})
-async function consume(stream:ReadableStream) {
-	const reader = stream.getReader()
-	while (!(await reader.read()).done) { /* NOOP */
-	}
-}
