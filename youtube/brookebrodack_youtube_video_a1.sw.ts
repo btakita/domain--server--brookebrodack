@@ -120,6 +120,8 @@ export const [
 			const response = rewriter.transform(
 				new Response(
 					brookebrodack_youtube_rss_text_cache.data
+						// HTMLRewriter does not support xml tags with a namespace.
+						// TODO: Remove these replaceAll calls when using a parser that supports xml tags with a namespace
 						.replaceAll('<yt:', '<')
 						.replaceAll('</yt:', '</')
 						.replaceAll('<media:', '<')
@@ -130,14 +132,17 @@ export const [
 			function text_ontext_(key:Exclude<keyof typeof _youtube_video, 'create_ms'|'published_ms'|'updated_ms'>) {
 				return {
 					text(el:HTMLRewriterTypes.Text) {
-						if (!el.lastInTextNode) _youtube_video[key] = el.text
+						_youtube_video[key] ??= ''
+						_youtube_video[key] += el.text ?? ''
 					}
 				}
 			}
 			function date_ontext_(key:Extract<keyof typeof _youtube_video, 'create_ms'|'published_ms'|'updated_ms'>) {
 				return {
 					text(el:HTMLRewriterTypes.Text) {
-						if (!el.lastInTextNode) _youtube_video[key] = new Date(el.text)
+						if (el.text) {
+							_youtube_video[key] = new Date(el.text)
+						}
 					}
 				}
 			}
