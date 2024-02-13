@@ -7,6 +7,7 @@ export const brookebrodack_youtube_rss__url = 'http://www.youtube.com/feeds/vide
 // 1 hour
 const cache_ttl_ms = 60 * 3600 * 1000
 export const [
+	/** @see {import('./brookebrodack_youtube_video_a1.js').brookebrodack_youtube_video_a1$_} */
 	brookebrodack_youtube_rss_text_cache_meta$_,
 	brookebrodack_youtube_rss_text_cache_meta_
 ] = id_be_memo_pair_(
@@ -24,6 +25,7 @@ export const [
 			.all()[0]
 )
 export const [
+	/** @see {import('./brookebrodack_youtube_video_a1.js').brookebrodack_youtube_video_a1$_} */
 	brookebrodack_youtube_rss_text_cache$_,
 	brookebrodack_youtube_rss_text_cache_,
 ] = id_be_memo_pair_<
