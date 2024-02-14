@@ -39,10 +39,10 @@
 		"@rappstack/domain--server": "workspace:*",
 		"@rappstack/domain--server--auth": "workspace:*",
 		"@rappstack/domain--server--youtube": "workspace:*",
-		"ctx-core": "^6.2.3",
+		"ctx-core": "^6.3.0",
 		"drizzle-kit": "^0.20.14",
 		"drizzle-orm": "^0.29.3",
-		"relysjs": "^1.12.2"
+		"relysjs": "^1.13.0"
 	},
 	"devDependencies": {
 		"bun-types": "latest"
