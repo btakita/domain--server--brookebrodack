@@ -8,10 +8,10 @@ export const brookebrodack_youtube_rss__url = 'http://www.youtube.com/feeds/vide
 const cache_ttl_ms = 60 * 3600 * 1000
 export const [
 	,
-	/** @see {import('./brookebrodack_youtube_video_a1.js').brookebrodack_youtube_video_a1_} */
-	brookebrodack_youtube_rss_text_cache_meta_
+	/** @see {import('./brookebrodack_youtube_video_a1.js').youtube_video_a1_} */
+	youtube_rss_cache_meta_
 ] = id_be_memo_pair_(
-	'brookebrodack_youtube_rss_text_cache_meta',
+	'youtube_rss_cache_meta',
 	(ctx:wide_ctx_T&wide_app_ctx_T)=>
 		drizzle_db_(ctx)
 			.select({
@@ -26,17 +26,17 @@ export const [
 )
 export const [
 	,
-	/** @see {import('./brookebrodack_youtube_video_a1.js').brookebrodack_youtube_video_a1_} */
-	brookebrodack_youtube_rss_text_cache_,
+	/** @see {import('./brookebrodack_youtube_video_a1.js').youtube_video_a1_} */
+	youtube_rss_cache_,
 ] = id_be_memo_pair_<
 	typeof text_cache.$inferSelect|null,
 	unknown,
 	wide_ctx_T&wide_app_ctx_T
 >(
-	'brookebrodack_youtube_rss',
-	(ctx, brookebrodack_youtube_rss$)=>{
+	'youtube_rss_cache',
+	(ctx, youtube_rss_cache$)=>{
 		const db = drizzle_db_(ctx)
-		const brookebrodack_youtube_rss_text_cache_meta = brookebrodack_youtube_rss_text_cache_meta_(ctx)
+		const brookebrodack_youtube_rss_text_cache_meta = youtube_rss_cache_meta_(ctx)
 		if (
 			!brookebrodack_youtube_rss_text_cache_meta?.text_cache_id
 			|| brookebrodack_youtube_rss_text_cache_meta.validate_ms.getTime() + cache_ttl_ms < new Date().getTime()
@@ -49,7 +49,7 @@ export const [
 					.where(eq(text_cache.text_cache_id, brookebrodack_youtube_rss__url))
 					.limit(1)
 					.all()[0]
-				brookebrodack_youtube_rss$._ =
+				youtube_rss_cache$._ =
 					db.insert(text_cache)
 						.values({
 							text_cache_id: brookebrodack_youtube_rss__url,

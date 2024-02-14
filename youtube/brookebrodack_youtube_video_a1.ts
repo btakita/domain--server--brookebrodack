@@ -5,27 +5,27 @@ import { id_be_memo_pair_, rmemo__wait, type wide_ctx_T } from 'ctx-core/rmemo'
 import { desc, eq } from 'drizzle-orm'
 import { type wide_app_ctx_T } from 'relysjs/server'
 import {
-	brookebrodack_youtube_rss_text_cache_,
-	brookebrodack_youtube_rss_text_cache_meta_
-} from './brookebrodack_youtube_rss_text_cache.js'
+	youtube_rss_cache_,
+	youtube_rss_cache_meta_
+} from './youtube_rss_cache.js'
 export const [
 	,
 	/** @see {import('@btakita/ui--server--brookebrodack/content').content__doc_html_} */
-	brookebrodack_youtube_video_a1_,
+	youtube_video_a1_,
 ] = id_be_memo_pair_<
 	typeof youtube_video.$inferSelect[]|null,
 	unknown,
 	wide_ctx_T&wide_app_ctx_T
 >(
-	'brookebrodack_youtube_video_a1',
-	(ctx, brookebrodack_youtube_video_a1$)=>{
-		const brookebrodack_youtube_rss_text_cache_meta = brookebrodack_youtube_rss_text_cache_meta_(ctx)
+	'youtube_video_a1',
+	(ctx, youtube_video_a1$)=>{
+		const youtube_rss_cache_meta = youtube_rss_cache_meta_(ctx)
 		const db = drizzle_db_(ctx)
 		const up_to_date = !!(
-			brookebrodack_youtube_rss_text_cache_meta
+			youtube_rss_cache_meta
 			&& db.select()
 				.from(youtube_video)
-				.where(eq(youtube_video.create_ms, brookebrodack_youtube_rss_text_cache_meta.create_ms))
+				.where(eq(youtube_video.create_ms, youtube_rss_cache_meta.create_ms))
 				.orderBy(desc(youtube_video.published_ms))
 				.limit(1)
 				.all()[0])
@@ -33,7 +33,7 @@ export const [
 			console.info('brookebrodack_youtube_video_a1|CACHE MISS')
 			upsert()
 				.then(brookebrodack_youtube_video_a1=>{
-					brookebrodack_youtube_video_a1$._ = compact(
+					youtube_video_a1$._ = compact(
 						brookebrodack_youtube_video_a1) as typeof youtube_video.$inferSelect[]
 				})
 				.catch(err=>{
@@ -80,11 +80,11 @@ export const [
 								) {
 									const local__youtube_video = _youtube_video
 									rmemo__wait(
-										()=>brookebrodack_youtube_rss_text_cache_(ctx),
-										brookebrodack_youtube_rss_text_cache=>brookebrodack_youtube_rss_text_cache,
+										()=>youtube_rss_cache_(ctx),
+										youtube_rss_cache=>youtube_rss_cache,
 										10_000
-									).then(brookebrodack_youtube_rss_text_cache=>{
-										local__youtube_video.create_ms = brookebrodack_youtube_rss_text_cache!.create_ms
+									).then(youtube_rss_cache=>{
+										local__youtube_video.create_ms = youtube_rss_cache!.create_ms
 										const upsert__youtube_video_a1 =
 											db.insert(youtube_video)
 												.values(local__youtube_video as typeof youtube_video.$inferSelect)
@@ -99,8 +99,7 @@ export const [
 										console.error(err)
 										resolve(null)
 									})
-								}
-								else {
+								} else {
 									console.warn('brookebrodack_youtube_video_a1|entry|onEndTag|missing props', {
 										videoId: _youtube_video.videoId,
 										count: ++count,
@@ -114,14 +113,14 @@ export const [
 					)
 				}
 			})
-			const brookebrodack_youtube_rss_text_cache =
+			const youtube_rss_cache =
 				(await rmemo__wait(
-					()=>brookebrodack_youtube_rss_text_cache_(ctx),
-					brookebrodack_youtube_rss_text_cache=>brookebrodack_youtube_rss_text_cache,
+					()=>youtube_rss_cache_(ctx),
+					youtube_rss_cache=>youtube_rss_cache,
 					10_000))!
 			const response = rewriter.transform(
 				new Response(
-					brookebrodack_youtube_rss_text_cache.data
+					youtube_rss_cache.data
 						// HTMLRewriter does not support xml tags with a namespace.
 						// TODO: Remove these replaceAll calls when using a parser that supports xml tags with a namespace
 						.replaceAll('<yt:', '<')
