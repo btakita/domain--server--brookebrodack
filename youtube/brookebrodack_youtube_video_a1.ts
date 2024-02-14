@@ -2,15 +2,15 @@ import { youtube_video } from '@rappstack/domain--server--youtube/schema'
 import { drizzle_db_ } from '@rappstack/domain--server/drizzle'
 import { compact } from 'ctx-core/array'
 import { id_be_memo_pair_, rmemo__wait, type wide_ctx_T } from 'ctx-core/rmemo'
-import { eq } from 'drizzle-orm'
+import { desc, eq } from 'drizzle-orm'
 import { type wide_app_ctx_T } from 'relysjs/server'
 import {
-	brookebrodack_youtube_rss_text_cache$_,
+	brookebrodack_youtube_rss_text_cache_,
 	brookebrodack_youtube_rss_text_cache_meta_
 } from './brookebrodack_youtube_rss_text_cache.js'
 export const [
+	,
 	/** @see {import('@btakita/ui--server--brookebrodack/content').content__doc_html_} */
-	brookebrodack_youtube_video_a1$_,
 	brookebrodack_youtube_video_a1_,
 ] = id_be_memo_pair_<
 	typeof youtube_video.$inferSelect[]|null,
@@ -26,6 +26,7 @@ export const [
 			&& db.select()
 				.from(youtube_video)
 				.where(eq(youtube_video.create_ms, brookebrodack_youtube_rss_text_cache_meta.create_ms))
+				.orderBy(desc(youtube_video.published_ms))
 				.limit(1)
 				.all()[0])
 		if (!up_to_date) {
@@ -79,7 +80,7 @@ export const [
 								) {
 									const local__youtube_video = _youtube_video
 									rmemo__wait(
-										brookebrodack_youtube_rss_text_cache$_(ctx),
+										()=>brookebrodack_youtube_rss_text_cache_(ctx),
 										brookebrodack_youtube_rss_text_cache=>brookebrodack_youtube_rss_text_cache,
 										10_000
 									).then(brookebrodack_youtube_rss_text_cache=>{
@@ -115,7 +116,7 @@ export const [
 			})
 			const brookebrodack_youtube_rss_text_cache =
 				(await rmemo__wait(
-					brookebrodack_youtube_rss_text_cache$_(ctx),
+					()=>brookebrodack_youtube_rss_text_cache_(ctx),
 					brookebrodack_youtube_rss_text_cache=>brookebrodack_youtube_rss_text_cache,
 					10_000))!
 			const response = rewriter.transform(
