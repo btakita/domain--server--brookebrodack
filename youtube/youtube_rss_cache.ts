@@ -37,7 +37,7 @@ export const [
 					$._ = text_cache__select(ctx, YOUTUBE_RSS_URL)
 					return
 				}
-				const data = await response.json()
+				const data = await response.text()
 				$._ = await text_cache__upsert(ctx, YOUTUBE_RSS_URL, { data })
 			}).catch(err=>console.error(err))
 			return null
