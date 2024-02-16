@@ -19,17 +19,25 @@ export const [
 		>(active_text_cache_(text_cache, { ttl_ms })?.data)
 		if (!youtube_channelListResponse) {
 			run(async ()=>{
+				const cache_etag = text_cache?.etag
 				const response = await fetch(
-					`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${YOUTUBE_CHANNELID}&key=${GOOGLE_API_KEY}`)
+					`https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${YOUTUBE_CHANNELID}&key=${GOOGLE_API_KEY}`,
+					{
+						headers: cache_etag ? { 'If-None-Match': cache_etag } : undefined
+					})
 				if (!response.ok) {
 					console.warn('youtube_channelListResponse|GET|' + response.status)
 					$._ = json__parse<gapi.client.youtube.ChannelListResponse>(text_cache?.data)
 					return
 				}
-				const payload = await response.json()
+				const is_cache_status = response.status === 304
+				const payload =
+					is_cache_status
+						? null
+						: await response.json()
 				$._ = await text_cache__upsert(ctx, text_cache_id, {
-					data: JSON.stringify(payload),
-					etag: payload.etag
+					data: is_cache_status ? text_cache.data : JSON.stringify(payload),
+					etag: is_cache_status ? text_cache.etag ?? undefined : payload.etag
 				})
 					.then(_text_cache=>json__parse<gapi.client.youtube.ChannelListResponse>(_text_cache.data))
 					.catch(err=>{
