@@ -1,9 +1,13 @@
+import { drizzle_db_ } from '@rappstack/domain--server/drizzle'
+import { text_cache_tbl } from '@rappstack/domain--server/schema'
 import { active_text_cache_, text_cache__select, text_cache__upsert } from '@rappstack/domain--server/text_cache'
+import { I } from 'ctx-core/combinators'
 import { json__parse } from 'ctx-core/json'
-import { id_be_memo_pair_, type nullish, run, type wide_ctx_T } from 'ctx-core/rmemo'
+import { id_be_memo_pair_, type nullish, nullish__none_, rmemo__wait, run, type wide_ctx_T } from 'ctx-core/rmemo'
+import { eq } from 'drizzle-orm'
 import { type wide_app_ctx_T } from 'relysjs/server'
-import { domain_server_brookebrodack_env_ } from '../env/index.js'
-import { youtube_channelListResponse_ } from './youtube_channelListResponse.js'
+import { google_api_key_ } from './google_api_key.js'
+import { youtube_channelList_playlistId_ } from './youtube_channelListResponse.js'
 const ttl_ms = 24 * 60 * 60 * 1000
 const text_cache_id = 'youtube#playlistItemListResponse'
 export const [
@@ -13,59 +17,91 @@ export const [
 	gapi.client.youtube.PlaylistItemListResponse[]|nullish,
 	unknown,
 	wide_ctx_T&wide_app_ctx_T
->('youtube_playlistItemListResponse_a1',
-	(ctx, $)=>{
-		const { GOOGLE_API_KEY, DEFAULT_UPLOADS_PLAYLIST_ID } = domain_server_brookebrodack_env_()
-		const text_cache = text_cache__select(ctx, text_cache_id)
-		const youtube_playlistItemListResponse_a1 = json__parse<gapi.client.youtube.PlaylistItemListResponse[]>(
-			active_text_cache_(text_cache,
-				{ ttl_ms })?.data)
-		if (!youtube_playlistItemListResponse_a1) {
-			let playlistId = youtube_channelListResponse_(ctx)?.items?.[0].contentDetails?.relatedPlaylists?.uploads
-			if (!playlistId) {
-				console.warn('Could not fetch playlistId...using DEFAULT_UPLOADS_PLAYLIST_ID')
-				playlistId = DEFAULT_UPLOADS_PLAYLIST_ID
-			}
-			run(async ()=>{
-				let nextPageToken:string|undefined = undefined
-				const cache__youtube_playlistItemListResponse_a1 = json__parse<gapi.client.youtube.PlaylistItemListResponse[]>(
+>('youtube_playlistItemListResponse_a1', (ctx, $)=>{
+	const text_cache = text_cache__select(ctx, text_cache_id)
+	const youtube_playlistItemListResponse_a1 = json__parse<gapi.client.youtube.PlaylistItemListResponse[]>(
+		active_text_cache_(text_cache,
+			{ ttl_ms })?.data)
+	if (!youtube_playlistItemListResponse_a1) {
+		run(async ()=>{
+			let nextPageToken:string|undefined = undefined
+			const cache__youtube_playlistItemListResponse_a1 =
+				json__parse<gapi.client.youtube.PlaylistItemListResponse[]>(
 					text_cache?.data)
-				const youtube_playlistItemListResponse_a1:gapi.client.youtube.PlaylistItemListResponse[] = []
-				let page_idx = 0
-				do {
-					const url = new URL(
-						`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=25&playlistId=${playlistId}&key=${GOOGLE_API_KEY}&maxResults=50`)
-					if (nextPageToken) url.searchParams.set('pageToken', nextPageToken)
-					const cache__youtube_playlistItemListResponse = cache__youtube_playlistItemListResponse_a1?.[page_idx]
-					const cache_etag = cache__youtube_playlistItemListResponse?.etag
-					const response = await fetch('' + url, {
-						headers: cache_etag ? { 'If-None-Match': cache_etag } : undefined
-					})
-					if (!response.ok) {
-						console.warn('youtube_playlistItemListResponse_a1|GET|' + response.status)
-						$._ = json__parse(text_cache?.data)
-						return
-					}
-					const is_cache_status = response.status === 304
-					const playlistItemListResponse:gapi.client.youtube.PlaylistItemListResponse =
-						is_cache_status
-							? cache__youtube_playlistItemListResponse!
-							: await response.json()
-					youtube_playlistItemListResponse_a1.push(playlistItemListResponse)
-					nextPageToken = playlistItemListResponse.nextPageToken
-					page_idx++
-				} while (nextPageToken)
-				$._ = youtube_playlistItemListResponse_a1
-				text_cache__upsert(
-					ctx,
-					text_cache_id,
-					{
-						data: JSON.stringify(youtube_playlistItemListResponse_a1),
-						etag: youtube_playlistItemListResponse_a1[0]?.etag
-					}
-				).catch(err=>console.error(err))
-			}).catch(err=>console.error(err))
+			const youtube_playlistItemListResponse_a1:gapi.client.youtube.PlaylistItemListResponse[] = []
+			await url__ready__wait(ctx)
+			let page_idx = 0
+			do {
+				const url = url_(ctx)
+				if (nextPageToken) url.searchParams.set('pageToken', nextPageToken)
+				const cache__youtube_playlistItemListResponse = cache__youtube_playlistItemListResponse_a1?.[page_idx]
+				const cache_etag = cache__youtube_playlistItemListResponse?.etag
+				const response = await fetch('' + url, {
+					headers: cache_etag ? { 'If-None-Match': cache_etag } : undefined
+				})
+				if (!response.ok) {
+					console.warn('youtube_playlistItemListResponse_a1|GET|' + response.status)
+					$._ = json__parse(text_cache?.data)
+					return
+				}
+				const is_cache_status = response.status === 304
+				const playlistItemListResponse:gapi.client.youtube.PlaylistItemListResponse =
+					is_cache_status
+						? cache__youtube_playlistItemListResponse!
+						: await response.json()
+				youtube_playlistItemListResponse_a1.push(playlistItemListResponse)
+				nextPageToken = playlistItemListResponse.nextPageToken
+				page_idx++
+			} while (nextPageToken)
+			text_cache__upsert(
+				ctx,
+				text_cache_id,
+				{
+					data: JSON.stringify(youtube_playlistItemListResponse_a1),
+					etag: youtube_playlistItemListResponse_a1[0]?.etag
+				})
+			$._ = youtube_playlistItemListResponse_a1
+		}).catch(err=>console.error(err))
+		return null
+	}
+	return youtube_playlistItemListResponse_a1
+})
+export const [
+	,
+	youtube_playlistItemListResponse_etag_
+] = id_be_memo_pair_<
+	string|null|undefined,
+	unknown,
+	wide_ctx_T&wide_app_ctx_T
+>('youtube_playlistItemListResponse_etag', (ctx, $)=>
+	nullish__none_([youtube_channelList_playlistId_(ctx)], ()=>{
+		const etag = drizzle_db_(ctx)
+			.select({ etag: text_cache_tbl.etag })
+			.from(text_cache_tbl)
+			.where(eq(text_cache_tbl.text_cache_id, text_cache_id))
+			.limit(1)
+			.all()[0]
+			?.etag
+		if (!etag) {
+			youtube_playlistItemListResponse_a1_(ctx)
 			return null
 		}
-		return youtube_playlistItemListResponse_a1
-	})
+		if (etag) {
+			const url = url_(ctx)
+			fetch(url, { headers: { 'If-None-Match': etag } })
+				.then(response=>{
+					$._ = response.status === 304 ? etag : $.val
+				})
+				.catch(err=>console.error(err))
+		}
+		return $.val
+	}))
+function url__ready__wait(ctx:wide_ctx_T&wide_app_ctx_T) {
+	return rmemo__wait(()=>youtube_channelList_playlistId_(ctx), I, 5_000)
+}
+function url_(ctx:wide_ctx_T&wide_app_ctx_T) {
+	const url = new URL('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50')
+	url.searchParams.set('playlistId', youtube_channelList_playlistId_(ctx)!)
+	url.searchParams.set('key', google_api_key_(ctx))
+	return url
+}

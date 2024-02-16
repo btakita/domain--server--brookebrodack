@@ -1,4 +1,7 @@
 export * from './authory_youtube_rss_cache.js'
+export * from './google_api_key.js'
+export * from './rss_youtube_video_a1.js'
+export * from './videoId_thumbnail_url.js'
 export * from './youtube_channelListResponse.js'
 export * from './youtube_playlistItemList.js'
 export * from './youtube_playlistItemListResponse_a1.js'

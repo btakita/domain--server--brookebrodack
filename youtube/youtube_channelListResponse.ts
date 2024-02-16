@@ -1,7 +1,7 @@
 /// <reference types="@types/gapi.client.youtube-v3" />
 import { active_text_cache_, text_cache__select, text_cache__upsert } from '@rappstack/domain--server/text_cache'
 import { json__parse } from 'ctx-core/json'
-import { id_be_memo_pair_, type nullish, run, type wide_ctx_T } from 'ctx-core/rmemo'
+import { id_be_memo_pair_, type nullish, nullish__none_, run, type wide_ctx_T } from 'ctx-core/rmemo'
 import { type wide_app_ctx_T } from 'relysjs/server'
 import { domain_server_brookebrodack_env_ } from '../env/index.js'
 const ttl_ms = Infinity
@@ -31,21 +31,22 @@ export const [
 					return
 				}
 				const is_cache_status = response.status === 304
-				const payload =
-					is_cache_status
-						? null
-						: await response.json()
-				$._ = await text_cache__upsert(ctx, text_cache_id, {
-					data: is_cache_status ? text_cache.data : JSON.stringify(payload),
-					etag: is_cache_status ? text_cache.etag ?? undefined : payload.etag
-				})
-					.then(_text_cache=>json__parse<gapi.client.youtube.ChannelListResponse>(_text_cache.data))
-					.catch(err=>{
-						console.error(err)
-						return null
-					})
+				const payload = is_cache_status ? null : await response.json()
+				$._ = json__parse(
+					text_cache__upsert(ctx, text_cache_id, {
+						data: is_cache_status ? text_cache.data : JSON.stringify(payload),
+						etag: is_cache_status ? text_cache.etag ?? undefined : payload.etag
+					}).data)
 			}).catch(err=>console.error(err))
 			return null
 		}
 		return youtube_channelListResponse
 	})
+export const [
+	,
+	youtube_channelList_playlistId_
+] = id_be_memo_pair_('youtube_channelList_playlistId',
+	(ctx:wide_ctx_T&wide_app_ctx_T)=>
+		nullish__none_([youtube_channelListResponse_(ctx)],
+			youtube_channelListResponse=>
+				youtube_channelListResponse.items?.[0].contentDetails?.relatedPlaylists?.uploads))

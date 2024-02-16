@@ -8,15 +8,14 @@ import { domain_server_brookebrodack_env_ } from '../env/index.js'
 const cache_ttl_ms = 60 * 3600 * 1000
 export const [
 	,
-	/** @see {import('./youtube_video_a1.js').youtube_video_a1_} */
+	/** @see {import('./youtube_video_a1.js').rss_youtube_video_a1_} */
 	youtube_rss_cache_meta_
-] = id_be_memo_pair_(
-	'youtube_rss_cache_meta',
+] = id_be_memo_pair_('youtube_rss_cache_meta',
 	(ctx:wide_ctx_T&wide_app_ctx_T)=>
 		text_cache_meta__select(ctx, domain_server_brookebrodack_env_().YOUTUBE_RSS_URL))
 export const [
 	,
-	/** @see {import('./youtube_video_a1.js').youtube_video_a1_} */
+	/** @see {import('./youtube_video_a1.js').rss_youtube_video_a1_} */
 	youtube_rss_cache_,
 ] = id_be_memo_pair_<
 	typeof text_cache_tbl.$inferSelect|nullish,
@@ -38,7 +37,7 @@ export const [
 					return
 				}
 				const data = await response.text()
-				$._ = await text_cache__upsert(ctx, YOUTUBE_RSS_URL, { data })
+				$._ = text_cache__upsert(ctx, YOUTUBE_RSS_URL, { data })
 			}).catch(err=>console.error(err))
 			return null
 		}
