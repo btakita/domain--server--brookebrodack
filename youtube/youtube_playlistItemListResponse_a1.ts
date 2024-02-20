@@ -4,7 +4,7 @@ import {
 	active_text_cache_,
 	text_cache__select,
 	text_cache__upsert,
-	text_cache_T
+	type text_cache_T
 } from '@rappstack/domain--server/text_cache'
 import { I } from 'ctx-core/combinators'
 import { json__parse } from 'ctx-core/json'
