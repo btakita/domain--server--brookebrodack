@@ -1,4 +1,4 @@
-export function domain_server_brookebrodack_env_() {
+export function brookebrodack_server_env_() {
 	const env = import.meta.env
 	if (!env.GOOGLE_API_KEY) throw Error('GOOGLE_API_KEY|missing')
 	if (!env.YOUTUBE_CHANNELID) throw Error('YOUTUBE_CHANNELID|missing')

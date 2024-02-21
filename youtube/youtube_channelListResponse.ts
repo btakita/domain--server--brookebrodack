@@ -3,7 +3,7 @@ import { active_text_cache_, text_cache__select, text_cache__upsert } from '@rap
 import { json__parse } from 'ctx-core/json'
 import { id_be_memo_pair_, type nullish, nullish__none_, run, type wide_ctx_T } from 'ctx-core/rmemo'
 import { type wide_app_ctx_T } from 'relysjs/server'
-import { domain_server_brookebrodack_env_ } from '../env/index.js'
+import { brookebrodack_server_env_ } from '../env/index.js'
 const ttl_ms = Infinity
 const text_cache_id = 'youtube#channelListResponse'
 export const [
@@ -12,7 +12,7 @@ export const [
 ] = id_be_memo_pair_<gapi.client.youtube.ChannelListResponse|nullish, unknown, wide_ctx_T&wide_app_ctx_T>(
 	'youtube_channelListResponse',
 	(ctx, $)=>{
-		const { GOOGLE_API_KEY, YOUTUBE_CHANNELID } = domain_server_brookebrodack_env_()
+		const { GOOGLE_API_KEY, YOUTUBE_CHANNELID } = brookebrodack_server_env_()
 		const text_cache = text_cache__select(ctx, text_cache_id)
 		const youtube_channelListResponse = json__parse<
 			gapi.client.youtube.ChannelListResponse

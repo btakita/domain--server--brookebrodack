@@ -3,7 +3,7 @@ import { text_cache__select, text_cache__upsert, text_cache_meta__select } from 
 import { ms_ } from 'ctx-core/date'
 import { id_be_memo_pair_, type nullish, run, type wide_ctx_T } from 'ctx-core/rmemo'
 import { type wide_app_ctx_T } from 'relysjs/server'
-import { domain_server_brookebrodack_env_ } from '../env/index.js'
+import { brookebrodack_server_env_ } from '../env/index.js'
 import { youtube_rss_cache_meta_ } from './youtube_rss_cache.js'
 // 1 hour
 const cache_ttl_ms = 60 * 3600 * 1000
@@ -11,7 +11,7 @@ export const [
 	,
 	authory_youtube_rss_cache_meta_
 ] = id_be_memo_pair_('authory_youtube_rss_cache_meta', (ctx:wide_ctx_T&wide_app_ctx_T)=>
-	text_cache_meta__select(ctx, domain_server_brookebrodack_env_().AUTHORY_YOUTUBE_RSS_URL))
+	text_cache_meta__select(ctx, brookebrodack_server_env_().AUTHORY_YOUTUBE_RSS_URL))
 export const [
 	,
 	authory_youtube_rss_cache_,
@@ -20,7 +20,7 @@ export const [
 	unknown,
 	wide_ctx_T&wide_app_ctx_T
 >('authory_youtube_rss_cache', (ctx, $)=>{
-	const { AUTHORY_YOUTUBE_RSS_URL } = domain_server_brookebrodack_env_()
+	const { AUTHORY_YOUTUBE_RSS_URL } = brookebrodack_server_env_()
 	const youtube_rss_cache_meta = youtube_rss_cache_meta_(ctx)
 	if (
 		!youtube_rss_cache_meta?.text_cache_id
