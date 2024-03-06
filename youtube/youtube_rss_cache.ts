@@ -2,7 +2,6 @@ import { text_cache_tbl } from '@rappstack/domain--server/schema'
 import { text_cache__select, text_cache__upsert, text_cache_meta__select } from '@rappstack/domain--server/text_cache'
 import { ms_ } from 'ctx-core/date'
 import { id_be_memo_pair_, type nullish, run, type wide_ctx_T } from 'ctx-core/rmemo'
-import { type wide_app_ctx_T } from 'relysjs/server'
 import { brookebrodack_server_env_ } from '../env/index.js'
 // 1 hour
 const cache_ttl_ms = 60 * 3600 * 1000
@@ -11,7 +10,7 @@ export const [
 	/** @see {import('./youtube_video_a1.js').rss_youtube_video_a1_} */
 	youtube_rss_cache_meta_
 ] = id_be_memo_pair_('youtube_rss_cache_meta',
-	(ctx:wide_ctx_T&wide_app_ctx_T)=>
+	(ctx:wide_ctx_T<''|'app'>)=>
 		text_cache_meta__select(ctx, brookebrodack_server_env_().YOUTUBE_RSS_URL))
 export const [
 	,
@@ -20,7 +19,7 @@ export const [
 ] = id_be_memo_pair_<
 	typeof text_cache_tbl.$inferSelect|nullish,
 	unknown,
-	wide_ctx_T&wide_app_ctx_T
+	wide_ctx_T<''|'app'>
 >('youtube_rss_cache',
 	(ctx, $)=>{
 		const youtube_rss_cache_meta = youtube_rss_cache_meta_(ctx)

@@ -8,9 +8,15 @@ import {
 } from '@rappstack/domain--server/text_cache'
 import { I } from 'ctx-core/combinators'
 import { json__parse } from 'ctx-core/json'
-import { id_be_memo_pair_, type nullish, nullish__none_, rmemo__wait, type sig_T, type wide_ctx_T } from 'ctx-core/rmemo'
+import {
+	id_be_memo_pair_,
+	type nullish,
+	nullish__none_,
+	rmemo__wait,
+	type sig_T,
+	type wide_ctx_T
+} from 'ctx-core/rmemo'
 import { eq } from 'drizzle-orm'
-import { type wide_app_ctx_T } from 'relysjs/server'
 import { google_api_key_ } from './google_api_key.js'
 import { youtube_channelList_playlistId_ } from './youtube_channelListResponse.js'
 const ttl_ms = 24 * 60 * 60 * 1000
@@ -21,7 +27,7 @@ export const [
 ] = id_be_memo_pair_<
 	gapi.client.youtube.PlaylistItemListResponse[]|nullish,
 	unknown,
-	wide_ctx_T&wide_app_ctx_T
+	wide_ctx_T<''|'app'>
 >('youtube_playlistItemListResponse_a1', (ctx, $)=>{
 	// refresh when etag is updated
 	youtube_playlistItemListResponse_etag_(ctx)
@@ -42,7 +48,7 @@ export const [
 ] = id_be_memo_pair_<
 	string|null|undefined,
 	unknown,
-	wide_ctx_T&wide_app_ctx_T
+	wide_ctx_T<''|'app'>
 >('youtube_playlistItemListResponse_etag', (ctx, $)=>{
 	return nullish__none_([youtube_channelList_playlistId_(ctx)], ()=>{
 		const etag = drizzle_db_(ctx)
@@ -73,7 +79,7 @@ export const [
 	})
 })
 async function youtube_playlistItemListResponse_a1__update(
-	ctx:wide_ctx_T&wide_app_ctx_T,
+	ctx:wide_ctx_T<''|'app'>,
 	text_cache:text_cache_T,
 	$:sig_T<gapi.client.youtube.PlaylistItemListResponse[]|nullish>
 ) {
@@ -115,10 +121,10 @@ async function youtube_playlistItemListResponse_a1__update(
 		})
 	$._ = youtube_playlistItemListResponse_a1
 }
-function url__ready__wait(ctx:wide_ctx_T&wide_app_ctx_T) {
+function url__ready__wait(ctx:wide_ctx_T<''|'app'>) {
 	return rmemo__wait(()=>youtube_channelList_playlistId_(ctx), I, 5_000)
 }
-function url_(ctx:wide_ctx_T&wide_app_ctx_T) {
+function url_(ctx:wide_ctx_T<''|'app'>) {
 	const url = new URL('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50')
 	url.searchParams.set('playlistId', youtube_channelList_playlistId_(ctx)!)
 	url.searchParams.set('key', google_api_key_(ctx))

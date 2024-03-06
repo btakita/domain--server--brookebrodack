@@ -14,7 +14,7 @@ export const [
 ] = id_be_memo_pair_<
 	typeof youtube_video_tbl.$inferSelect[]|null,
 	unknown,
-	wide_ctx_T&wide_app_ctx_T
+	wide_ctx_T<''|'app'>
 >('youtube_video_a1',
 	(ctx, youtube_video_a1$)=>{
 		const db = drizzle_db_(ctx)

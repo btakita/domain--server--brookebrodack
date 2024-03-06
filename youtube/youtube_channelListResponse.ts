@@ -2,14 +2,13 @@
 import { active_text_cache_, text_cache__select, text_cache__upsert } from '@rappstack/domain--server/text_cache'
 import { json__parse } from 'ctx-core/json'
 import { id_be_memo_pair_, type nullish, nullish__none_, run, type wide_ctx_T } from 'ctx-core/rmemo'
-import { type wide_app_ctx_T } from 'relysjs/server'
 import { brookebrodack_server_env_ } from '../env/index.js'
 const ttl_ms = Infinity
 const text_cache_id = 'youtube#channelListResponse'
 export const [
 	,
 	youtube_channelListResponse_
-] = id_be_memo_pair_<gapi.client.youtube.ChannelListResponse|nullish, unknown, wide_ctx_T&wide_app_ctx_T>(
+] = id_be_memo_pair_<gapi.client.youtube.ChannelListResponse|nullish, unknown, wide_ctx_T<''|'app'>>(
 	'youtube_channelListResponse',
 	(ctx, $)=>{
 		const { GOOGLE_API_KEY, YOUTUBE_CHANNELID } = brookebrodack_server_env_()
@@ -47,7 +46,7 @@ export const [
 	/** @see {youtube_playlistItemListResponse_etag_} */
 	youtube_channelList_playlistId_
 ] = id_be_memo_pair_('youtube_channelList_playlistId',
-	(ctx:wide_ctx_T&wide_app_ctx_T)=>
+	(ctx:wide_ctx_T<''|'app'>)=>
 		nullish__none_([youtube_channelListResponse_(ctx)],
 			youtube_channelListResponse=>
 				youtube_channelListResponse.items?.[0].contentDetails?.relatedPlaylists?.uploads))

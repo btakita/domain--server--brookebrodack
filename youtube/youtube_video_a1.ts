@@ -3,7 +3,6 @@ import { drizzle_db_ } from '@rappstack/domain--server/drizzle'
 import { I } from 'ctx-core/combinators'
 import { id_be_memo_pair_, rmemo__wait, type wide_ctx_T } from 'ctx-core/rmemo'
 import { eq, sql } from 'drizzle-orm'
-import { type wide_app_ctx_T } from 'relysjs/server'
 import { youtube_playlistItem_a1_ } from './youtube_playlistItemList.js'
 import { youtube_playlistItemListResponse_etag_ } from './youtube_playlistItemListResponse_a1.js'
 export const [
@@ -12,7 +11,7 @@ export const [
 ] = id_be_memo_pair_<
 	typeof youtube_video_tbl.$inferSelect[]|undefined,
 	unknown,
-	wide_ctx_T&wide_app_ctx_T
+	wide_ctx_T<''|'app'>
 >('youtube_video_a1', (ctx, $)=>{
 	const youtube_playlistItemListResponse_etag = youtube_playlistItemListResponse_etag_(ctx)
 	if (youtube_playlistItemListResponse_etag === undefined) return
