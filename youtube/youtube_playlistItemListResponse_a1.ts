@@ -78,6 +78,9 @@ export const [
 		return $.val
 	})
 })
+export function youtube_playlistItemListResponse_etag__wait(ctx:wide_ctx_T<''|'app'>, timeout?:number) {
+	return rmemo__wait(()=>youtube_playlistItemListResponse_etag_(ctx), I, timeout ?? 10_000)
+}
 async function youtube_playlistItemListResponse_a1__update(
 	ctx:wide_ctx_T<''|'app'>,
 	text_cache:text_cache_T,

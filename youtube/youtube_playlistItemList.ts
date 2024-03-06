@@ -11,6 +11,6 @@ export const [
 				.flatMap(youtube_playlistItemListResponse=>
 					youtube_playlistItemListResponse.items!)
 				.filter(youtube_playlistItem=>youtube_playlistItem.status?.privacyStatus !== 'private')))
-export function youtube_playlistItem_a1__wait(ctx:wide_ctx_T<''|'app'>) {
-	return rmemo__wait(()=>youtube_playlistItem_a1_(ctx), I, 10_000)
+export function youtube_playlistItem_a1__wait(ctx:wide_ctx_T<''|'app'>, timeout?:number) {
+	return rmemo__wait(()=>youtube_playlistItem_a1_(ctx), I, timeout ?? 10_000)
 }
