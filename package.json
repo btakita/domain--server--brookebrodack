@@ -45,12 +45,12 @@
 		"ctx-core": "^6.6.2",
 		"drizzle-kit": "^0.20.14",
 		"drizzle-orm": "^0.30.4",
-		"relysjs": "^1.17.2"
+		"relysjs": "^1.17.3"
 	},
 	"devDependencies": {
 		"bun-types": "latest"
 	},
 	"peerDependencies": {
-		"typescript": "^5.4.2"
+		"typescript": "^5.4.3"
 	}
 }
