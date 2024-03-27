@@ -44,7 +44,7 @@
 		"@types/gapi.client.youtube-v3": "^0.0.4",
 		"ctx-core": "^6.7.0",
 		"drizzle-kit": "^0.20.14",
-		"drizzle-orm": "^0.30.4",
+		"drizzle-orm": "^0.30.5",
 		"relysjs": "^1.18.0"
 	},
 	"devDependencies": {
