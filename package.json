@@ -42,10 +42,10 @@
 		"@rappstack/domain--server--auth": "workspace:*",
 		"@rappstack/domain--server--youtube": "workspace:*",
 		"@types/gapi.client.youtube-v3": "^0.0.4",
-		"ctx-core": "^6.7.0",
+		"ctx-core": "^6.7.1",
 		"drizzle-kit": "^0.20.14",
 		"drizzle-orm": "^0.30.6",
-		"relysjs": "^1.18.3"
+		"relysjs": "^1.18.5"
 	},
 	"devDependencies": {
 		"bun-types": "latest"
