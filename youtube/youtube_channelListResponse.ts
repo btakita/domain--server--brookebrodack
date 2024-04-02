@@ -26,16 +26,17 @@ export const [
 					})
 				if (!response.ok) {
 					console.warn('youtube_channelListResponse|GET|' + response.status)
-					$._ = json__parse<gapi.client.youtube.ChannelListResponse>(text_cache?.data)
+					$.set(json__parse<gapi.client.youtube.ChannelListResponse>(text_cache?.data))
 					return
 				}
 				const is_cache_status = response.status === 304
 				const payload = is_cache_status ? null : await response.json()
-				$._ = json__parse(
-					text_cache__upsert(ctx, text_cache_id, {
-						data: is_cache_status ? text_cache.data : JSON.stringify(payload),
-						etag: is_cache_status ? text_cache.etag ?? undefined : payload.etag
-					}).data)
+				$.set(
+					json__parse(
+						text_cache__upsert(ctx, text_cache_id, {
+							data: is_cache_status ? text_cache.data : JSON.stringify(payload),
+							etag: is_cache_status ? text_cache.etag ?? undefined : payload.etag
+						}).data))
 			}).catch(err=>console.error(err))
 			return null
 		}

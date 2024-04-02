@@ -66,12 +66,12 @@ export const [
 		fetch(url, { headers: { 'If-None-Match': etag } })
 			.then(async response=>{
 				if (response.status === 304) {
-					$._ = etag
+					$.set(etag)
 					return
 				} else {
-					$._ = null
+					$.set(null)
 					const data = await response.json()
-					$._ = data.etag
+					$.set(data.etag)
 				}
 			})
 			.catch(err=>console.error(err))
@@ -103,7 +103,7 @@ async function youtube_playlistItemListResponse_a1__update(
 		})
 		if (!response.ok) {
 			console.warn('youtube_playlistItemListResponse_a1|GET|' + response.status)
-			$._ = json__parse(text_cache?.data)
+			$.set(json__parse(text_cache?.data))
 			return
 		}
 		const is_cache_status = response.status === 304
@@ -122,7 +122,7 @@ async function youtube_playlistItemListResponse_a1__update(
 			data: JSON.stringify(youtube_playlistItemListResponse_a1),
 			etag: youtube_playlistItemListResponse_a1[0]?.etag
 		})
-	$._ = youtube_playlistItemListResponse_a1
+	$.set(youtube_playlistItemListResponse_a1)
 }
 function url__ready__wait(ctx:wide_ctx_T<''|'app'>) {
 	return rmemo__wait(()=>youtube_channelList_playlistId_(ctx), I, 5_000)

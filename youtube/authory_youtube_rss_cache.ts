@@ -29,11 +29,11 @@ export const [
 			const response = await fetch(AUTHORY_YOUTUBE_RSS_URL)
 			if (!response.ok) {
 				console.warn('authory_youtube_rss_cache|' + response.status)
-				$._ = text_cache__select(ctx, AUTHORY_YOUTUBE_RSS_URL)
+				$.set(text_cache__select(ctx, AUTHORY_YOUTUBE_RSS_URL))
 				return
 			}
 			const data = await response.text()
-			$._ = text_cache__upsert(ctx, AUTHORY_YOUTUBE_RSS_URL, { data })
+			$.set(text_cache__upsert(ctx, AUTHORY_YOUTUBE_RSS_URL, { data }))
 		}).catch(err=>console.error(err))
 		return null
 	}

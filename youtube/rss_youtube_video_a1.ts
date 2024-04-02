@@ -47,7 +47,7 @@ export const [
 							.returning()
 							.all()[0])
 				}
-				youtube_video_a1$._ = youtube_video_a1
+				youtube_video_a1$.set(youtube_video_a1)
 			}).catch(err=>console.error(err))
 			return null
 		}

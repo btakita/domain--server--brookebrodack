@@ -29,31 +29,32 @@ export const [
 		youtube_playlistItem_a1__wait(ctx),
 		youtube_playlistItemListResponse_etag__wait(ctx)
 	]).then(([youtube_playlistItem_a1, youtube_playlistItemListResponse_etag])=>{
-		$._ = db.insert(youtube_video_tbl)
-			.values(youtube_playlistItem_a1.map(playlistItem=>({
-				videoId: playlistItem.snippet!.resourceId!.videoId!,
-				publishedAt: new Date(playlistItem.snippet!.publishedAt!),
-				channelId: playlistItem.snippet!.channelId!,
-				channelTitle: playlistItem.snippet!.channelTitle!,
-				title: playlistItem.snippet!.title!,
-				description: playlistItem.snippet!.description!,
-				etag: playlistItem.etag!,
-				playlistItemListResponse_etag: youtube_playlistItemListResponse_etag
-			})))
-			.onConflictDoUpdate({
-				target: youtube_video_tbl.videoId,
-				set: {
-					publishedAt: sql`excluded.publishedAt`,
-					channelId: sql`excluded.channelId`,
-					channelTitle: sql`excluded.channelTitle`,
-					title: sql`excluded.title`,
-					description: sql`excluded.description`,
-					etag: sql`excluded.etag`,
-					playlistItemListResponse_etag: sql`excluded.playlistItemListResponse_etag`,
-				}
-			})
-			.returning()
-			.all() as typeof youtube_video_tbl.$inferSelect[]
+		$.set(<typeof youtube_video_tbl.$inferSelect[]>
+			db.insert(youtube_video_tbl)
+				.values(youtube_playlistItem_a1.map(playlistItem=>({
+					videoId: playlistItem.snippet!.resourceId!.videoId!,
+					publishedAt: new Date(playlistItem.snippet!.publishedAt!),
+					channelId: playlistItem.snippet!.channelId!,
+					channelTitle: playlistItem.snippet!.channelTitle!,
+					title: playlistItem.snippet!.title!,
+					description: playlistItem.snippet!.description!,
+					etag: playlistItem.etag!,
+					playlistItemListResponse_etag: youtube_playlistItemListResponse_etag
+				})))
+				.onConflictDoUpdate({
+					target: youtube_video_tbl.videoId,
+					set: {
+						publishedAt: sql`excluded.publishedAt`,
+						channelId: sql`excluded.channelId`,
+						channelTitle: sql`excluded.channelTitle`,
+						title: sql`excluded.title`,
+						description: sql`excluded.description`,
+						etag: sql`excluded.etag`,
+						playlistItemListResponse_etag: sql`excluded.playlistItemListResponse_etag`,
+					}
+				})
+				.returning()
+				.all())
 	}).catch(err=>console.error(err))
 	return $.val
 })
