@@ -42,15 +42,15 @@
 		"@rappstack/domain--server--auth": "workspace:*",
 		"@rappstack/domain--server--youtube": "workspace:*",
 		"@types/gapi.client.youtube-v3": "^0.0.4",
-		"ctx-core": "^7.1.1",
+		"ctx-core": "^7.1.2",
 		"drizzle-kit": "^0.20.14",
-		"drizzle-orm": "^0.30.6",
-		"relysjs": "^1.20.3"
+		"drizzle-orm": "^0.30.7",
+		"relysjs": "^1.20.5"
 	},
 	"devDependencies": {
 		"bun-types": "latest"
 	},
 	"peerDependencies": {
-		"typescript": "^5.4.3"
+		"typescript": "^5.4.4"
 	}
 }
