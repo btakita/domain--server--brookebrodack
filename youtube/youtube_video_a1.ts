@@ -1,7 +1,7 @@
 import { youtube_video_tbl } from '@rappstack/domain--server--youtube/schema'
 import { drizzle_db_ } from '@rappstack/domain--server/drizzle'
 import { id_be_memo_pair_, type wide_ctx_T } from 'ctx-core/rmemo'
-import { eq, sql } from 'drizzle-orm'
+import { desc, eq, sql } from 'drizzle-orm'
 import { youtube_playlistItem_a1__wait } from './youtube_playlistItemList.js'
 import {
 	youtube_playlistItemListResponse_etag_,
@@ -22,6 +22,7 @@ export const [
 		const db__youtube_video_a1 = db.select()
 			.from(youtube_video_tbl)
 			.where(eq(youtube_video_tbl.playlistItemListResponse_etag, youtube_playlistItemListResponse_etag))
+			.orderBy(desc(youtube_video_tbl.publishedAt))
 			.all()
 		if (db__youtube_video_a1.length) return db__youtube_video_a1
 	}
