@@ -43,8 +43,8 @@
 		"@rappstack/domain--server--youtube": "workspace:*",
 		"@types/gapi.client.youtube-v3": "^0.0.4",
 		"ctx-core": "^7.2.27",
-		"drizzle-kit": "^0.22.8",
-		"drizzle-orm": "^0.31.4",
+		"drizzle-kit": "^0.23.0",
+		"drizzle-orm": "^0.32.0",
 		"relysjs": "^1.21.63"
 	},
 	"devDependencies": {
