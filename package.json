@@ -45,7 +45,7 @@
 		"ctx-core": "^7.2.27",
 		"drizzle-kit": "^0.23.0",
 		"drizzle-orm": "^0.32.0",
-		"relysjs": "^1.21.63"
+		"relysjs": "^1.21.64"
 	},
 	"devDependencies": {
 		"bun-types": "latest"
