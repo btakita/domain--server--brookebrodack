@@ -5,7 +5,6 @@ import { I } from 'ctx-core/combinators'
 import { id_be_memo_pair_, type nullish, rmemo__wait, type wide_ctx_T } from 'ctx-core/rmemo'
 import { eq } from 'drizzle-orm'
 import { type wide_app_ctx_T } from 'relysjs/server'
-import { authory_youtube_rss_cache_ } from './authory_youtube_rss_cache.js'
 import { youtube_rss_cache_, youtube_rss_cache_meta_ } from './youtube_rss_cache.js'
 export const [
 	,
@@ -20,9 +19,7 @@ export const [
 		const db = drizzle_db_(ctx)
 		const youtube_rss_cache_meta = youtube_rss_cache_meta_(ctx)
 		const youtube__up_to_date = text_cache__up_to_date_(ctx, youtube_rss_cache_meta)
-		const authory_youtube_rss_cache_meta = authory_youtube_rss_cache_(ctx)
-		const authory__up_to_date = text_cache__up_to_date_(ctx, authory_youtube_rss_cache_meta)
-		if (!youtube__up_to_date || !authory__up_to_date) {
+		if (!youtube__up_to_date) {
 			console.info('youtube_video_a1|CACHE MISS')
 			Promise.all([
 				youtube__youtube_video_a1_(),
