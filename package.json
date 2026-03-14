@@ -38,9 +38,9 @@
 		"youtube"
 	],
 	"dependencies": {
-		"@rappstack/domain--server": "workspace:*",
-		"@rappstack/domain--server--auth": "workspace:*",
-		"@rappstack/domain--server--youtube": "workspace:*",
+		"@rappstack/domain--server": "^0.1.0",
+		"@rappstack/domain--server--auth": "^0.1.0",
+		"@rappstack/domain--server--youtube": "^0.1.0",
 		"@types/gapi.client.youtube-v3": "^0.0.4",
 		"ctx-core": "^7.2.27",
 		"drizzle-kit": "^0.23.0",
